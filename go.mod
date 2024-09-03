@@ -1,4 +1,4 @@
-module go.mau.fi/whatsmeow/mdtest/wacsv
+module github.com/adityamj/wacsv
 
 go 1.21
 
