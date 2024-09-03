@@ -1,6 +1,6 @@
 # WACSV - a simple golang program to send whatsapp messages using cli.
 
-This is an adaptation of mdtest from [whatsmeow][go.mau.fi/whatsmeow/mdtest/wacsv] repo.
+This is an adaptation of mdtest from [Whatsmeow](https://github.com/tulir/whatsmeow) repo.
 
 installation assumes you have a working golang installation. Certain paths and behaviours assume a linux system. However, it should not be difficult to adapt this program for windows usage.
 
@@ -8,7 +8,6 @@ installation:
     go get github.com/adityamj/wacsv
     go install  github.com/adityamj/wacsv
 
-[go.mau.fi/whatsmeow/mdtest/wacsv]: go.mau.fi/whatsmeow/mdtest/wacsv
 
 # Example usage:
     wacsv -db-address ./mydb.sqlite3 -ignore 0 -media <image.jpg/png> -img -template <mytemplate.txt> -sleep 500 -w 60
