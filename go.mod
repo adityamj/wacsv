@@ -5,6 +5,7 @@ go 1.21
 toolchain go1.22.0
 
 require (
+	github.com/gabriel-vasile/mimetype v1.4.5
 	github.com/mattn/go-sqlite3 v1.14.22
 	github.com/mdp/qrterminal/v3 v3.1.1
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646

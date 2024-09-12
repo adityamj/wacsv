@@ -15,7 +15,6 @@ import (
 	"image"
 	"image/jpeg"
 	_ "image/png"
-	"net/http"
 	"os"
 	"os/signal"
 	"os/user"
@@ -37,6 +36,7 @@ import (
 	"github.com/nfnt/resize"
 	"google.golang.org/protobuf/proto"
 
+	"github.com/gabriel-vasile/mimetype"
 	"go.mau.fi/whatsmeow"
 	waBinary "go.mau.fi/whatsmeow/binary"
 	waProto "go.mau.fi/whatsmeow/proto/waE2E"
@@ -110,6 +110,7 @@ func main() {
 		return
 	}
 
+	mimetype.SetLimit(0)
 	latestVer, err := whatsmeow.GetLatestVersion(nil)
 	if err != nil {
 		log.Infof("Outdated Version", err)
@@ -280,7 +281,7 @@ func main() {
 			_ = jpeg.Encode(imwriter, newImage, nil)
 
 		}
-		mime = http.DetectContentType(data)
+		mime = mimetype.Detect(data).String()
 		dl = len(data)
 	}
 	if sendDoc {
