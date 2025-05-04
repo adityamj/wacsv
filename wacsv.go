@@ -29,6 +29,7 @@ import (
 	"io"
 	"math/rand"
 	"regexp"
+	"strconv"
 	"text/template"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -73,6 +74,7 @@ var blackList = flag.String("blacklist", "", "File containing blacklisted number
 var msgIdPath = flag.String("msg-ids", "msg_ids.csv", "Location to store jid, message id pairs for later deletion")
 var revoke = flag.Int("revoke", -1, "field id of message Id in input to be revoked. This deletes the messages.")
 var keepRunning = flag.Int("w", 3600, "Keep running for specified number of seconds to respond to retry messages")
+var dumpGroups = flag.String("dump-groups", "", "Dump groups to the provided csv file and exit")
 
 var SLEEP_JITTER = 1000
 
@@ -165,6 +167,12 @@ func main() {
 		return
 	}
 	defer cli.Disconnect()
+
+	if *dumpGroups != "" {
+		dumpGroupsFunc(*dumpGroups)
+		return
+	}
+
 	var f *os.File
 
 	if *messageFile != "" {
@@ -557,5 +565,31 @@ func sendDocument(jid string, uploaded *whatsmeow.UploadResponse, fn *string, ca
 		log.Errorf("Error sending document message to %s: %v", jid, err)
 	} else {
 		log.Infof("Document message sent (server timestamp: %s)", resp.Timestamp)
+	}
+}
+
+func dumpGroupsFunc(p string) {
+	groups, err := cli.GetJoinedGroups()
+	if err != nil {
+		log.Errorf("Failed to get group list: %v", err)
+	} else {
+		func() {
+			f, _ := os.Create(p)
+			defer f.Close()
+			c := csv.NewWriter(f)
+			defer c.Flush()
+			c.Write([]string{"id", "isAnnounce", "group name", "count", "parent"})
+			for i, group := range groups {
+				rec := []string{
+					group.JID.String(),
+					strconv.FormatBool(group.IsAnnounce),
+					group.Name,
+					strconv.Itoa(len(group.Participants)),
+					group.LinkedParentJID.String(),
+				}
+				c.Write(rec)
+				log.Infof("%s %+v", i, group.Name)
+			}
+		}()
 	}
 }
