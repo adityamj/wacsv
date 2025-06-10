@@ -15,6 +15,7 @@ import (
 	"image"
 	"image/jpeg"
 	_ "image/png"
+	"net/http"
 	"os"
 	"os/signal"
 	"os/user"
@@ -91,6 +92,7 @@ var saveIds chan sendChanPayload
 
 func main() {
 
+	ctx := context.Background()
 	workerWaiter := sync.WaitGroup{}
 	waBinary.IndentXML = true
 	flag.Parse()
@@ -106,20 +108,20 @@ func main() {
 
 	dbLog := waLog.Stdout("Database", logLevel, true)
 	db := "file:" + *dbAddress + "?_foreign_keys=on"
-	storeContainer, err := sqlstore.New(*dbDialect, db, dbLog)
+	storeContainer, err := sqlstore.New(ctx, *dbDialect, db, dbLog)
 	if err != nil {
 		log.Errorf("Failed to connect to database: %v", err)
 		return
 	}
 
 	mimetype.SetLimit(0)
-	latestVer, err := whatsmeow.GetLatestVersion(nil)
+	latestVer, err := whatsmeow.GetLatestVersion(ctx, http.DefaultClient)
 	if err != nil {
 		log.Infof("Outdated Version", err)
 		return
 	}
 	store.SetWAVersion(*latestVer)
-	device, err := storeContainer.GetFirstDevice()
+	device, err := storeContainer.GetFirstDevice(ctx)
 	if err != nil {
 		log.Errorf("Failed to get device: %v", err)
 		return

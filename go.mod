@@ -5,12 +5,12 @@ go 1.23.0
 toolchain go1.24.0
 
 require (
-	github.com/gabriel-vasile/mimetype v1.4.8
-	github.com/mattn/go-sqlite3 v1.14.24
-	github.com/mdp/qrterminal/v3 v3.2.0
+	github.com/gabriel-vasile/mimetype v1.4.9
+	github.com/mattn/go-sqlite3 v1.14.28
+	github.com/mdp/qrterminal/v3 v3.2.1
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
-	go.mau.fi/whatsmeow v0.0.0-20250225112721-b7530f3a5056
-	google.golang.org/protobuf v1.36.5
+	go.mau.fi/whatsmeow v0.0.0-20250606170101-3afe34f8ab8f
+	google.golang.org/protobuf v1.36.6
 )
 
 require (
@@ -19,12 +19,15 @@ require (
 	github.com/gorilla/websocket v1.5.3 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
-	github.com/rs/zerolog v1.33.0 // indirect
-	go.mau.fi/libsignal v0.1.2 // indirect
-	go.mau.fi/util v0.8.5 // indirect
-	golang.org/x/crypto v0.35.0 // indirect
-	golang.org/x/net v0.35.0 // indirect
-	golang.org/x/sys v0.30.0 // indirect
-	golang.org/x/term v0.29.0 // indirect
+	github.com/petermattis/goid v0.0.0-20250508124226-395b08cebbdb // indirect
+	github.com/rs/zerolog v1.34.0 // indirect
+	go.mau.fi/libsignal v0.2.0 // indirect
+	go.mau.fi/util v0.8.7 // indirect
+	golang.org/x/crypto v0.39.0 // indirect
+	golang.org/x/exp v0.0.0-20250606033433-dcc06ee1d476 // indirect
+	golang.org/x/net v0.41.0 // indirect
+	golang.org/x/sys v0.33.0 // indirect
+	golang.org/x/term v0.32.0 // indirect
+	golang.org/x/text v0.26.0 // indirect
 	rsc.io/qr v0.2.0 // indirect
 )
