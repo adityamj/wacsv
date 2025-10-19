@@ -571,7 +571,7 @@ func sendDocument(jid string, uploaded *whatsmeow.UploadResponse, fn *string, ca
 }
 
 func dumpGroupsFunc(p string) {
-	groups, err := cli.GetJoinedGroups()
+	groups, err := cli.GetJoinedGroups(context.Background())
 	if err != nil {
 		log.Errorf("Failed to get group list: %v", err)
 	} else {
